@@ -1,20 +1,30 @@
 package finder
 import(
 	"log"
+    "io"
+    "bytes"
 	"github.com/plgd-dev/go-coap/v3/message"
+	"github.com/plgd-dev/go-coap/v3/message/codes"
+	"github.com/plgd-dev/go-coap/v3/mux"
 )
-func (c *Controller) receiveImage(w coap.ResponseWriter, req *coap.Request) {
-    imageData := req.Msg.Payload()
-	//send image to service
-    if err := c.service.ProcessImage(imageData); err != nil {
-        log.Printf("Image service excepiton: %v", err)
-        respondWithError(w, "Could not process image")
-        return
+// @Summary recieve the image to save and then place on the queue for processing by the pytorch script
+// @Accept json
+// @Produce json
+// @Router /image
+func ReceiveImage(w mux.ResponseWriter, r *mux.Message) {
+    payload, error := io.ReadAll(r.Body())
+	if error!=nil{
+        log.Printf("error %v",error)
     }
-    coapResp := coap.Message{
-        Type: coap.Acknowledgement,
-        Code: coap.Content,
-        Payload: nil,
-    }
-    coapResp.SetOption(coap.ContentFormat, coap.TextPlain)
+    ProcessImage(payload)
+    customResp := w.Conn().AcquireMessage(r.Context())
+	defer w.Conn().ReleaseMessage(customResp)
+	customResp.SetCode(codes.Content)
+	customResp.SetToken(r.Token())
+	customResp.SetContentFormat(message.TextPlain)
+	customResp.SetBody(bytes.NewReader([]byte("Processed and placed image on the queue")))
+	error = w.Conn().WriteMessage(customResp)
+	if error != nil {
+		log.Printf("cannot set response: %v", error)
+	}
 }

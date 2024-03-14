@@ -1,10 +1,9 @@
 package finder
 import (
     "io/ioutil"
-    "os"
     "github.com/go-stomp/stomp/v3"
 )
-func (s *Service) ProcessImage(imageData []byte) error {
+func ProcessImage(imageData []byte) error {
     // Save the image data to a temporary file
 	// ioutil.TempFile writes unique naming for each file 
     tempFile, err := ioutil.TempFile("", "image-*.jpg")
@@ -22,7 +21,7 @@ func (s *Service) ProcessImage(imageData []byte) error {
     
 }
 
-func(s *Service) notifyActiveMq(filePath string)error{
+func notifyActiveMq(filePath string)error{
 	conn, err := stomp.Dial("tcp", "localhost:61613")
     if err != nil {
         return err
