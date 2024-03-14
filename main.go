@@ -18,5 +18,6 @@ func main() {
     server := mux.NewRouter()
     server.Use(loggingMiddleware)
     server.Handle("/image", mux.HandlerFunc(controller.ReceiveImage))
+    server.Handle("/hello", mux.HandlerFunc(controller.HelloWorld))
     log.Fatal(coap.ListenAndServe("udp",":5688",server))
 }
