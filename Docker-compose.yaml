@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  go:
+    build: ./go
+    volumes:
+      - ./shared/temp:/app/temp
+    ports:
+      - "8080:8080"
+
+  activemq:
+    image: rmohr/activemq:latest
+    ports:
+      - "8161:8161" #Web management
+      - "61616:61616"
+      - "5672:5672"
+      - "61613:61613" #The stomp port, the rest of the ports aren't used but for completeness might as well leave them open
+      - "1883:1883" #This is interesting, it's the mqtt port, not currently used but maybe in future
+      - "61614:61614"
+
+  python-cuda:
+    build:
+      context: ./pytorch_model
+      dockerfile: Dockerfile
+    volumes:
+      - ./shared/temp:/app/temp
+      #Add a second directory because after processing the python script writes to disk
+      - ./shared/processed:/app/processed
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+
+volumes:
+  shared:
