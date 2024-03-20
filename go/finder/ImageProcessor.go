@@ -1,6 +1,7 @@
 package finder
 import (
-    "io/ioutil"
+    "time"
+    "os"
     "github.com/go-stomp/stomp/v3"
     "github.com/google/uuid"
 )
@@ -10,12 +11,11 @@ func ProcessImage(imageData []byte) error {
     pseudo_unique_file  := "image-" + time.Now().Format("20060102150405") +uuid.New().String()[:8]+".jpg"
     filePath := "./temp/" + pseudo_unique_file
     // Write the image data to the file in the specified directory
-    err := ioutil.WriteFile(filePath, imageData, 0644)
+    err := os.WriteFile(filePath, imageData, 0644)
     if err != nil {
         return err
     }
-	return notifyActiveMq(tempFile.Name())
-    
+    return notifyActiveMq(filePath) 
 }
 
 func notifyActiveMq(filePath string)error{

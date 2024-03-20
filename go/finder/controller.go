@@ -29,11 +29,8 @@ func ReceiveImage(w mux.ResponseWriter, r *mux.Message) {
 	}
 }
 func HelloWorld(w mux.ResponseWriter, r *mux.Message){
-    customResp := w.Conn().AcquireMessage(r.Context())
-	defer w.Conn().ReleaseMessage(customResp)
-	customResp.SetCode(codes.Content)
-	customResp.SetToken(r.Token())
-	customResp.SetContentFormat(message.TextPlain)
-	customResp.SetBody(bytes.NewReader([]byte("hello world")))
-	w.Conn().WriteMessage(customResp)
+	err := w.SetResponse(codes.GET, message.TextPlain, bytes.NewReader([]byte("hello world")))
+	if err != nil {
+		log.Printf("cannot set response: %v", err)
+	}
 }

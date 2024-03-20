@@ -5,7 +5,8 @@ services:
     volumes:
       - ./shared/temp:/app/temp
     ports:
-      - "8080:8080"
+      - "5688:5688/udp"
+      - "49332:49332/udp"
 
   activemq:
     image: rmohr/activemq:latest
