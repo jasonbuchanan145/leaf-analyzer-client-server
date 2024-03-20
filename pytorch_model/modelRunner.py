@@ -8,7 +8,7 @@ from torchvision.models import ResNet152_Weights
 from torchvision.models.detection import FasterRCNN
 from torchvision.models.detection.backbone_utils import resnet_fpn_backbone
 
-def _transform_image(filename:str)
+def _transform_image(filename:str):
     image = Image.open(filename).convert("RGB")
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -22,7 +22,7 @@ def _define_model():
     model = model.to('cuda')
     model.load_state_dict(torch.load('model.pth'))
     model.eval()
-    return model;
+    return model
     
 def _filter_and_draw(transformed_image,prediction):
     pred_boxes = prediction[0]['boxes'].cpu().numpy()

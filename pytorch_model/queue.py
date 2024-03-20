@@ -12,12 +12,10 @@ conn = stomp.Connection([('activemq', 61613)])
 conn.set_listener('', ImageProcessorListener())
 conn.connect('admin', 'admin', wait=True)
 
-conn.subscribe(destination='/queue/files', id=1, ack='auto')
+conn.subscribe(destination='/queue/insect-finding-queue', id=1, ack='auto')
 #Busy loop to keep the connection active and script running
 try:
     while True:
         time.sleep(10)
 except KeyboardInterrupt:
     print("Exiting")
-
-conn.disconnect()

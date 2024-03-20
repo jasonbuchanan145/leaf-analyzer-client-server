@@ -2,18 +2,15 @@ package finder
 import (
     "io/ioutil"
     "github.com/go-stomp/stomp/v3"
+    "github.com/google/uuid"
 )
 func ProcessImage(imageData []byte) error {
     // Save the image data to a temporary file
-	// ioutil.TempFile writes unique naming for each file 
-    tempFile, err := ioutil.TempFile("", "image-*.jpg")
-    if err != nil {
-        return err
-    }
-    defer tempFile.Close()
-	//write returns the number of bytes written and any errors.
-	//since I don't care about the number of bytes use _, to discard it
-    _, err = tempFile.Write(imageData)
+    //outputs the date in the format of yyyymmddhhmmss_UUID.jpg where UUID is just the first 8 characters of the uuid
+    pseudo_unique_file  := "image-" + time.Now().Format("20060102150405") +uuid.New().String()[:8]+".jpg"
+    filePath := "./temp/" + pseudo_unique_file
+    // Write the image data to the file in the specified directory
+    err := ioutil.WriteFile(filePath, imageData, 0644)
     if err != nil {
         return err
     }
@@ -22,10 +19,14 @@ func ProcessImage(imageData []byte) error {
 }
 
 func notifyActiveMq(filePath string)error{
-	conn, err := stomp.Dial("tcp", "localhost:61613")
+    options := []func(*stomp.Conn) error{
+        stomp.ConnOpt.Login("admin", "admin"),
+    }
+	conn, err := stomp.Dial("tcp", "localhost:61613", options...)
     if err != nil {
         return err
     }
+    //defer is used on end of function to disconnect, similar to java's try with resource
     defer conn.Disconnect()
 
     // Send the file path to the queue
