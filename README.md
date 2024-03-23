@@ -28,9 +28,9 @@ A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer
     - Known issues:
         - The pytorch model container is several gigabytes due to cuda, pytorch, etc, download times could take a bit
         - Because of the size of the dependencies during conda enviornment creation you may see this error ```'Connection broken: IncompleteRead``` a dependency broke mid download, you just need to run the compose up again
+#### Client
 - In another tab go to ./client
 - compile the client `go build`
-#### Client
 - As of right now plug and play network discovery is not enabled and only local communication is supported. To run use ./client _yourimage.jpg_
 
 
