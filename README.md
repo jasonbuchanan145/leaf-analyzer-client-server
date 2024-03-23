@@ -46,7 +46,7 @@ A toolchain for light weight IOT devices to transmit images taken of plant leave
 - Run ./client test.jpg
 - Wait for a couple seconds
 - Go to ./processed (this directory is created by docker)
-- View the output, each box is colored with a level of percentage of confidence. 
+- View the output, each box is labeled with a level of percentage of confidence. 
   
  ![image](https://github.com/jasonbuchanan145/leaf-analyzer-server/assets/83380304/9d71f6ae-a36c-4d1b-8d5f-939d90ecad24)
 
