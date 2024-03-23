@@ -1,7 +1,7 @@
 # Insect Damage Detection
 
 ## Summary
-A toolchain for light weight IOT devices to transmit images taken of plant leaves to a server using CoAP and process them using PyTorch to detect insect damage
+A toolchain for light weight IoT devices to transmit images taken of plant leaves to a server using CoAP and process them using a custom dataset backed by ResNET to detect insect damage
 
 ## Setup 
 ### Hardware requirements
