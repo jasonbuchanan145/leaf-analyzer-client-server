@@ -15,6 +15,7 @@ A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer
 - Conda
 
 ### Running the project
+#### Server
 - Go to https://github.com/jasonbuchanan145/Insect-Damage-Finder and download the project
 - Create the environment ```conda env create -f env.yaml```
 - Train the model ```conda run -n env python training.py```
@@ -29,4 +30,9 @@ A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer
         - Because of the size of the dependencies during conda enviornment creation you may see this error ```'Connection broken: IncompleteRead``` a dependency broke mid download, you just need to run the compose up again
 - In another tab go to ./client
 - compile the client `go build`
+#### Client
+- As of right now plug and play network discovery is not enabled and only local communication is supported. To run use ./client _yourimage.jpg_
+
+
+### Archetecture Diagram
 

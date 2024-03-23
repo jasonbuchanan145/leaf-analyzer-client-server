@@ -8,6 +8,15 @@ services:
       - "5688:5688"
     depends_on:
       - activemq
+    command: >
+      sh -c "
+        while ! nc -z activemq 61613; do
+          echo 'Waiting for ActiveMQ...'
+          sleep 1
+        done;
+        echo 'ActiveMQ is up!';
+        /app/leaf-analyizer-server
+      "
 
   activemq:
     image: apache/activemq-artemis:latest
@@ -38,6 +47,14 @@ services:
             capabilities: [gpu]
     depends_on:
       - activemq
-
+    command: >
+      sh -c "
+        while ! nc -z activemq 61613; do
+          echo 'Waiting for ActiveMQ...'
+          sleep 1
+        done;
+        echo 'ActiveMQ is up!';
+        conda run -n env python queue.py
+      "
 volumes:
   shared:
