@@ -34,5 +34,7 @@ A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer
 - As of right now plug and play network discovery is not enabled and only local communication is supported. To run use ./client _yourimage.jpg_
 
 
-### Archetecture Diagram
+### Archetecture diagram
+- TODO:
 
+### 

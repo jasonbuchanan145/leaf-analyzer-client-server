@@ -24,7 +24,7 @@ def _define_model():
     model.eval()
     return model
     
-def _filter_and_draw(transformed_image,prediction):
+def _filter_and_draw(transformed_image,prediction,filename):
     pred_boxes = prediction[0]['boxes'].cpu().numpy()
     pred_labels = prediction[0]['labels'].cpu().numpy()
     pred_scores = prediction[0]['scores'].cpu().numpy()
@@ -52,4 +52,3 @@ def process_image(filename):
     with torch.no_grad():
         prediction = model([transformed_image.to("cuda")])
     _filter_and_draw(transformed_image,prediction)
-

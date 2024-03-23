@@ -15,7 +15,7 @@ services:
           sleep 1
         done;
         echo 'ActiveMQ is up!';
-        /app/leaf-analyizer-server
+        /app/leaf-analyzer-server
       "
 
   activemq:
