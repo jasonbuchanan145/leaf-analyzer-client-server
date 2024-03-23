@@ -8,8 +8,7 @@ from torchvision.models import ResNet152_Weights
 from torchvision.models.detection import FasterRCNN
 from torchvision.models.detection.backbone_utils import resnet_fpn_backbone
 
-def _transform_image(filename:str):
-    image = Image.open(filename).convert("RGB")
+def _transform_image(image):
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
@@ -24,7 +23,7 @@ def _define_model():
     model.eval()
     return model
     
-def _filter_and_draw(transformed_image,prediction,filename):
+def _filter_and_draw(transformed_image,prediction,image):
     pred_boxes = prediction[0]['boxes'].cpu().numpy()
     pred_labels = prediction[0]['labels'].cpu().numpy()
     pred_scores = prediction[0]['scores'].cpu().numpy()
@@ -38,6 +37,7 @@ def _filter_and_draw(transformed_image,prediction,filename):
     pil_image = transforms.ToPILImage()(transformed_image.cuda())
 
     fig, ax = plt.subplots(1)
+    ax.imshow(image)
     #Get the filtered boxes and their scores and overlay it with the image
     for box, score in zip(filtered_boxes,filtered_scores):
         x, y, x2, y2 = box
@@ -47,8 +47,9 @@ def _filter_and_draw(transformed_image,prediction,filename):
     plt.savefig("./processed/results.png")
 
 def process_image(filename):
+    image = Image.open(filename).convert("RGB")
     transformed_image = _transform_image(filename=filename)
     model=_define_model()
     with torch.no_grad():
         prediction = model([transformed_image.to("cuda")])
-    _filter_and_draw(transformed_image,prediction)
+    _filter_and_draw(transformed_image,prediction, image)
