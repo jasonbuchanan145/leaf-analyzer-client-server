@@ -39,14 +39,14 @@ A toolchain for light weight IOT devices to transmit images taken of plant leave
 
 ### Example
 - After running the server configurations above go to the client directory
-- Place your photo in ./payloads (this directory is hardcoded as it's the directory being used the zero configurations)
+- Place your photo in ./payloads (this directory is hardcoded)
 - example photo
   
   ![image](https://github.com/jasonbuchanan145/leaf-analyzer-server/assets/83380304/1a4237b2-b8f2-4ba4-8258-796350bc8566)
 - Run ./client test.jpg
 - Wait for a couple seconds
 - Go to ./processed (this directory is created by docker)
-- View the output, each box is labeled with a level of percentage of confidence. 
+- View the output, each box is labeled with a percentage of confidence. 
   
  ![image](https://github.com/jasonbuchanan145/leaf-analyzer-server/assets/83380304/9d71f6ae-a36c-4d1b-8d5f-939d90ecad24)
 
