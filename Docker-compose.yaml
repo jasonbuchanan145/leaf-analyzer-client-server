@@ -5,11 +5,21 @@ services:
     volumes:
       - ./shared/temp:/app/temp
     ports:
-      - "5688:5688/udp"
-      - "49332:49332/udp"
+      - "5688:5688"
+    depends_on:
+      - activemq
+    command: >
+      sh -c "
+        while ! nc -z activemq 61613; do
+          echo 'Waiting for ActiveMQ...'
+          sleep 1
+        done;
+        echo 'ActiveMQ is up!';
+        /app/leaf-analyzer-server
+      "
 
   activemq:
-    image: rmohr/activemq:latest
+    image: apache/activemq-artemis:latest
     ports:
       - "8161:8161" #Web management
       - "61616:61616"
@@ -35,6 +45,16 @@ services:
           - driver: nvidia
             count: 1
             capabilities: [gpu]
-
+    depends_on:
+      - activemq
+    command: >
+      sh -c "
+        while ! nc -z activemq 61613; do
+          echo 'Waiting for ActiveMQ...'
+          sleep 1
+        done;
+        echo 'ActiveMQ is up!';
+        conda run -n env python queue.py
+      "
 volumes:
   shared:

@@ -4,12 +4,12 @@ go 1.22.1
 
 require (
 	github.com/go-stomp/stomp/v3 v3.1.0
+	github.com/google/uuid v1.6.0
 	github.com/plgd-dev/go-coap/v3 v3.3.3
 )
 
 require (
 	github.com/dsnet/golib/memfile v1.0.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
