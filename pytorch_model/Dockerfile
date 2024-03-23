@@ -16,7 +16,7 @@ WORKDIR /app
 #change this value as you edit the python files so it keeps the cache envs but doesn't cache changed python files
 ENV cache_bust=5
 # Copy the Python script into the container
-COPY ./queue.py /app/
+COPY ./queue_runner.py /app/
 COPY ./modelRunner.py /app/
 COPY ./model.pth /app/
 # Activate the environment and run the Python script with CUDA support

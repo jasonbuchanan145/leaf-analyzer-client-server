@@ -38,6 +38,8 @@ services:
       - ./shared/processed:/app/processed
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
+      #Conda buffers all the output, don't do that https://github.com/conda/conda/issues/9412
+      - PYTHONUNBUFFERED=1
     deploy:
       resources:
         reservations:
@@ -54,7 +56,7 @@ services:
           sleep 1
         done;
         echo 'ActiveMQ is up!';
-        conda run -n env python queue.py
+        conda run -n env python queue_runner.py
       "
 volumes:
   shared:
