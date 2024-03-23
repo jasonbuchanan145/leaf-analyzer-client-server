@@ -1,11 +1,15 @@
 # Insect Damage Detection
 
 ## Summary
-A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer them to a server using CoAP and process them using PyTorch to detect insect damage
+A toolchain for light weight IOT devices to transmit images taken of plant leaves to a server using CoAP and process them using PyTorch to detect insect damage
 
 ## Setup 
 ### Hardware requirements
+#### Server
 - An Nvidia graphics card with at least 4gigs of video memory
+- At least 8 gigs of available ram
+#### Client
+- Anything that has network access and can run Go binaries.
 
 ### Software requirements
 - Go version 1.22 
