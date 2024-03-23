@@ -1,11 +1,15 @@
-# insect-detection-coap
+# Insect Damage Detection
 
 ## Summary
-A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer them to a server using CoAP and process them using PyTorch for insect damage detection
+A toolchain for light weight IOT devices to transmit images taken of plant leaves to a server using CoAP and process them using PyTorch to detect insect damage
 
 ## Setup 
 ### Hardware requirements
-- An Nvidia graphics card with at least 6 gigs of video memmory
+#### Server
+- An Nvidia graphics card with at least 4gigs of video memory
+- At least 8 gigs of available ram
+#### Client
+- Anything that has network access and can run Go binaries.
 
 ### Software requirements
 - Go version 1.22 
@@ -28,13 +32,23 @@ A workflow for using a rasberry pi zero 2 w to capture images of leaves, trasfer
     - Known issues:
         - The pytorch model container is several gigabytes due to cuda, pytorch, etc, download times could take a bit
         - Because of the size of the dependencies during conda enviornment creation you may see this error ```'Connection broken: IncompleteRead``` a dependency broke mid download, you just need to run the compose up again
+#### Client
 - In another tab go to ./client
 - compile the client `go build`
-#### Client
 - As of right now plug and play network discovery is not enabled and only local communication is supported. To run use ./client _yourimage.jpg_
 
+### Example
+- After running the server configurations above go to the client directory
+- Place your photo in ./payloads (this directory is hardcoded as it's the directory being used the zero configurations)
+- example photo
+  
+  ![image](https://github.com/jasonbuchanan145/leaf-analyzer-server/assets/83380304/1a4237b2-b8f2-4ba4-8258-796350bc8566)
+- Run ./client test.jpg
+- Wait for a couple seconds
+- Go to ./processed (this directory is created by docker)
+- View the output, each box is labeled with a level of percentage of confidence. 
+  
+ ![image](https://github.com/jasonbuchanan145/leaf-analyzer-server/assets/83380304/9d71f6ae-a36c-4d1b-8d5f-939d90ecad24)
 
 ### Archetecture diagram
 - TODO:
-
-### 

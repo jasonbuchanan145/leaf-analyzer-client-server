@@ -23,6 +23,7 @@ def _define_model():
     model.eval()
     return model
     
+
 def _filter_and_draw(transformed_image,prediction,filename, image):
     pred_boxes = prediction[0]['boxes'].cpu().numpy()
     pred_labels = prediction[0]['labels'].cpu().numpy()
@@ -48,6 +49,7 @@ def _filter_and_draw(transformed_image,prediction,filename, image):
 
 def process_image(filename):
     image = Image.open(filename).convert("RGB")
+
     transformed_image = _transform_image(image)
     model=_define_model()
     with torch.no_grad():
