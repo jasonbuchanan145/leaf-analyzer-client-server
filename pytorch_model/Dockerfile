@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y wget\
 COPY ./env.yaml /app/
 RUN conda env create -f /app/env.yaml
 WORKDIR /app
-
+#change this value as you edit the python files so it keeps the cache envs but doesn't cache changed python files
+ENV cache_bust=1
 # Copy the Python script into the container
 COPY ./queue.py /app/
 COPY ./modelRunner.py /app/

@@ -5,11 +5,12 @@ services:
     volumes:
       - ./shared/temp:/app/temp
     ports:
-      - "5688:5688/udp"
-      - "49332:49332/udp"
+      - "5688:5688"
+    depends_on:
+      - activemq
 
   activemq:
-    image: rmohr/activemq:latest
+    image: apache/activemq-artemis:latest
     ports:
       - "8161:8161" #Web management
       - "61616:61616"
@@ -35,6 +36,8 @@ services:
           - driver: nvidia
             count: 1
             capabilities: [gpu]
+    depends_on:
+      - activemq
 
 volumes:
   shared:
