@@ -6,7 +6,7 @@ A toolchain for light weight IoT devices to transmit images taken of plant leave
 ## Setup 
 ### Hardware requirements
 #### Server
-- An Nvidia graphics card with at least 4gigs of video memory
+- An Nvidia graphics card with at least 4 gigs of video memory
 - At least 8 gigs of available ram
 #### Client
 - Anything that has network access and can run Go binaries.
