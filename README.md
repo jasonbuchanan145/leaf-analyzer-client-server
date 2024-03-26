@@ -19,18 +19,20 @@ A toolchain for light weight IoT devices to transmit images taken of plant leave
 - Conda
 
 ### Running the project
-#### Server
-- Go to https://github.com/jasonbuchanan145/Insect-Damage-Finder and download the project
+#### Backend
+##### ML Model
+- Go to the ML repository under this account  https://github.com/jasonbuchanan145/Insect-Damage-Finder and download the project
 - Create the environment ```conda env create -f env.yaml```
 - Train the model ```conda run -n env python training.py```
 - When completed it will output model.pth
 - After training copy the resulting pth file to this project's ./pytorch_model/model.pth
+##### Server, Image Processesing Consumer, ActiveMQ 
 - Compile the go server
     - go to ./server
     - run go build
-- Run ```Docker-compose up```
+- Run ```Docker-compose up``` to bring activemq, go server and the python consumer online
     - Known issues:
-        - The pytorch model container is several gigabytes due to cuda, pytorch, etc, download times could take a bit
+        - The pytorch dependencies are several gigabytes, download times could take a bit
         - Because of the size of the dependencies during conda enviornment creation you may see this error ```'Connection broken: IncompleteRead``` a dependency broke mid download, you just need to run the compose up again
 #### Client
 - In another tab go to ./client
