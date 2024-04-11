@@ -29,7 +29,7 @@ def _filter_and_draw(transformed_image,prediction,filename, image):
     pred_labels = prediction[0]['labels'].cpu().numpy()
     pred_scores = prediction[0]['scores'].cpu().numpy()
     #the level of confidence in the score. anything below 50 is garbage
-    threshold = 0.5
+    threshold = 0.6
     filtered_boxes = pred_boxes[pred_scores >= threshold]
     filtered_labels = pred_labels[pred_scores >= threshold]
     filtered_scores = pred_scores[pred_scores >= threshold]

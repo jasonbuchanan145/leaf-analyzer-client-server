@@ -56,7 +56,9 @@ services:
           sleep 1
         done;
         echo 'ActiveMQ is up!';
-        conda run -n env python queue_runner.py
+        . /opt/conda/etc/profile.d/conda.sh
+        conda activate env 
+        python queue_runner.py
       "
 volumes:
   shared:
