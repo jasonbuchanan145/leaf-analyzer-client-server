@@ -23,12 +23,13 @@ def _define_model():
     model.eval()
     return model
     
-def _filter_and_draw(transformed_image,prediction,image):
+
+def _filter_and_draw(transformed_image,prediction,filename, image):
     pred_boxes = prediction[0]['boxes'].cpu().numpy()
     pred_labels = prediction[0]['labels'].cpu().numpy()
     pred_scores = prediction[0]['scores'].cpu().numpy()
     #the level of confidence in the score. anything below 50 is garbage
-    threshold = 0.5
+    threshold = 0.6
     filtered_boxes = pred_boxes[pred_scores >= threshold]
     filtered_labels = pred_labels[pred_scores >= threshold]
     filtered_scores = pred_scores[pred_scores >= threshold]
@@ -44,12 +45,13 @@ def _filter_and_draw(transformed_image,prediction,image):
         rect = patches.Rectangle((x, y), x2 - x, y2 - y, linewidth=2, edgecolor='r', facecolor='none')
         ax.add_patch(rect)
         ax.text(x, y, f'{score:.2f}', fontsize=12, color='white', bbox=dict(facecolor='red', alpha=0.5))
-    plt.savefig("./processed/results.png")
+    plt.savefig("./processed/"+filename.split('/')[-1].split(".")[0]+".png")
 
 def process_image(filename):
     image = Image.open(filename).convert("RGB")
-    transformed_image = _transform_image(filename=filename)
+
+    transformed_image = _transform_image(image)
     model=_define_model()
     with torch.no_grad():
         prediction = model([transformed_image.to("cuda")])
-    _filter_and_draw(transformed_image,prediction, image)
+    _filter_and_draw(transformed_image,prediction,filename,image)
